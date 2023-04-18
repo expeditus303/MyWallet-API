@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb";
 import "dotenv/config";
 
-export const connectionString = process.env.DATABASE_URL;
+const connectionString = process.env.DATABASE_URL;
 
 const mongoClient = new MongoClient(connectionString);
 
