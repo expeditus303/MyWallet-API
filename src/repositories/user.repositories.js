@@ -30,6 +30,13 @@ async function del(userId, transactionId) {
   );
 }
 
+async function update(userId, transactionId, transactionValue, transactionDescription) {
+  return db.usersCollections.updateOne(
+    {_id: userId, "transactions._id": transactionId},
+    {$set: {"transactions.$.value": transactionValue, "transactions.$.description": transactionDescription}}
+  )
+}
+
 export default {
   findByEmail,
   create,
@@ -37,4 +44,5 @@ export default {
   findByToken,
   createTransaction,
   del,
+  update,
 };

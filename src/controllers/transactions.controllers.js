@@ -39,4 +39,18 @@ async function del(req, res, next) {
   }
 }
 
-export default { get, create, del };
+async function update(req, res, next) {
+  const { _id: userId } = res.locals.user
+  const { transactionId } = req.params
+  const { value: transactionValue, description: transactionDescription} = req.body
+
+  try {
+    await transactionsServices.update(userId, transactionId, transactionValue, transactionDescription)
+
+    res.status(200).send("Transaction successfully updated.")
+  } catch (err) {
+    next(err)
+  }
+}
+
+export default { get, create, del, update };
