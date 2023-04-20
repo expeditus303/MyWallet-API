@@ -7,12 +7,17 @@ const create = joi.object({
 });
 
 const objectId = joi.object({
-  transactionId: joi.string().alphanum().length(24).message("Invalid or missing transaction id").required(),
+  transactionId: joi
+    .string()
+    .alphanum()
+    .length(24)
+    .message("Invalid or missing transaction id")
+    .required(),
 });
 
 const update = joi.object({
   value: joi.number().positive().integer().strict().required(),
   description: joi.string().max(80).required(),
-})
+});
 
 export default { create, objectId, update };

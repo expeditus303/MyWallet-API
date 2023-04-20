@@ -1,4 +1,4 @@
-import transactionsServices from "../services/transactions.services.js"
+import transactionsServices from "../services/transactions.services.js";
 
 async function get(req, res, next) {
   const { transactions } = res.locals.user;
@@ -11,45 +11,50 @@ async function get(req, res, next) {
 }
 
 async function create(req, res, next) {
-    const { _id } = res.locals.user
-    const { type, value, description } = req.body
+  const { _id } = res.locals.user;
+  const { type, value, description } = req.body;
 
-    const userId = _id
+  const userId = _id;
 
-    try {
-        await transactionsServices.create(userId, type, value, description)
+  try {
+    await transactionsServices.create(userId, type, value, description);
 
-        return res.sendStatus(201)
-    } catch (err) {
-        next(err)
-    }
-
+    return res.sendStatus(201);
+  } catch (err) {
+    next(err);
+  }
 }
 
 async function del(req, res, next) {
-  const { _id: userId } = res.locals.user
-  const { transactionId } = req.params
+  const { _id: userId } = res.locals.user;
+  const { transactionId } = req.params;
 
   try {
-    await transactionsServices.del(userId, transactionId)
+    await transactionsServices.del(userId, transactionId);
 
-    res.status(204).send("Transaction successfully deleted.")
+    res.status(204).send("Transaction successfully deleted.");
   } catch (err) {
-    next(err)
+    next(err);
   }
 }
 
 async function update(req, res, next) {
-  const { _id: userId } = res.locals.user
-  const { transactionId } = req.params
-  const { value: transactionValue, description: transactionDescription} = req.body
+  const { _id: userId } = res.locals.user;
+  const { transactionId } = req.params;
+  const { value: transactionValue, description: transactionDescription } =
+    req.body;
 
   try {
-    await transactionsServices.update(userId, transactionId, transactionValue, transactionDescription)
+    await transactionsServices.update(
+      userId,
+      transactionId,
+      transactionValue,
+      transactionDescription
+    );
 
-    res.status(200).send("Transaction successfully updated.")
+    res.status(200).send("Transaction successfully updated.");
   } catch (err) {
-    next(err)
+    next(err);
   }
 }
 

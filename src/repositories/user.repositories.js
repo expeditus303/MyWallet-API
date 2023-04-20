@@ -30,11 +30,21 @@ async function del(userId, transactionId) {
   );
 }
 
-async function update(userId, transactionId, transactionValue, transactionDescription) {
+async function update(
+  userId,
+  transactionId,
+  transactionValue,
+  transactionDescription
+) {
   return db.usersCollections.updateOne(
-    {_id: userId, "transactions._id": transactionId},
-    {$set: {"transactions.$.value": transactionValue, "transactions.$.description": transactionDescription}}
-  )
+    { _id: userId, "transactions._id": transactionId },
+    {
+      $set: {
+        "transactions.$.value": transactionValue,
+        "transactions.$.description": transactionDescription,
+      },
+    }
+  );
 }
 
 export default {

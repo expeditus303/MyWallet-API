@@ -24,10 +24,20 @@ async function del(userId, transactionId) {
   return await userRepositories.del(userId, transactionId);
 }
 
-async function update(userId, transactionId, transactionValue, transactionDescription) {
-    transactionId = new ObjectId(transactionId);
+async function update(
+  userId,
+  transactionId,
+  transactionValue,
+  transactionDescription
+) {
+  transactionId = new ObjectId(transactionId);
 
-    return await userRepositories.update(userId, transactionId, transactionValue, transactionDescription)
+  return await userRepositories.update(
+    userId,
+    transactionId,
+    transactionValue,
+    transactionDescription
+  );
 }
 
 export default { create, del, update };

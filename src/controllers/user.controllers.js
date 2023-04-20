@@ -8,19 +8,19 @@ async function create(req, res, next) {
 
     return res.status(201).send("User signed up successfully");
   } catch (err) {
-    next(err)
+    next(err);
   }
 }
 
 async function authenticate(req, res, next) {
-  const {email, password} = req.body
+  const { email, password } = req.body;
 
   try {
-    const authData = await userServices.authenticate({email, password})
+    const authData = await userServices.authenticate({ email, password });
 
-    return res.status(200).send(authData)
+    return res.status(200).send(authData);
   } catch (err) {
-    next(err)
+    next(err);
   }
 }
 

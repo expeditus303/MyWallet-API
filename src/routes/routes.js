@@ -4,6 +4,6 @@ import transactionsRoutes from "./transactions.routes.js";
 
 const routes = Router();
 
-routes.use([userRoutes, transactionsRoutes])
+routes.use([userRoutes, transactionsRoutes]);
 
 export default routes;

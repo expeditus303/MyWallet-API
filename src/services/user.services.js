@@ -35,12 +35,12 @@ async function authenticate({ email, password }) {
   if (!validPassword) throw errors.unauthorized("Incorrect email or password");
 
   const userId = new ObjectId(userExists._id);
-  const userName = userExists.name
+  const userName = userExists.name;
   const token = uuidv4();
 
   await userRepositories.createSession({ _id: userId, token });
 
-  const authData = {name: userName, token}
+  const authData = { name: userName, token };
 
   return authData;
 }

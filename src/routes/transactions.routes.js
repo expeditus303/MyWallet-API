@@ -21,7 +21,8 @@ transactionsRoutes.put(
     transactionsSchemas.objectId,
     "params",
     httpStatus.BAD_REQUEST
-  ), schemaMiddleware(transactionsSchemas.update), 
+  ),
+  schemaMiddleware(transactionsSchemas.update),
   transactionsControllers.update
 );
 transactionsRoutes.delete(
