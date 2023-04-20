@@ -16,9 +16,9 @@ async function authenticate(req, res, next) {
   const {email, password} = req.body
 
   try {
-    const token = await userServices.authenticate({email, password})
+    const authData = await userServices.authenticate({email, password})
 
-    return res.status(200).send(token)
+    return res.status(200).send(authData)
   } catch (err) {
     next(err)
   }

@@ -4,8 +4,6 @@ function schemaMiddleware(schema, field = "body", status = httpStatus.UNPROCESSA
     return (req, res, next) => {
         const reqValues = req[field]
         const { error: errorMessages } = schema.validate(reqValues, {abortEarly: false})
-
-        console.log(errorMessages)
         
         if(errorMessages) {
             const error = errorMessages.details.map((detail) => detail.message)

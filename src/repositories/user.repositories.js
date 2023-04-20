@@ -12,4 +12,12 @@ async function createSession({_id, token}){
   return db.usersCollections.updateOne({_id}, {$set: {session: token}})
 }
 
-export default { findByEmail, create, createSession };
+async function findByToken(session){
+  return db.usersCollections.findOne(session)
+}
+
+async function createTransaction(userId, transaction) {
+  return db.usersCollections.updateOne({_id: userId}, {$push: {transactions: transaction}})
+}
+
+export default { findByEmail, create, createSession, findByToken, createTransaction };

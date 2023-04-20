@@ -12,4 +12,11 @@ function unauthorized(message = 'Unauthorized') {
     }
 }
 
-export default { conflit, unauthorized }
+function notFound(message = 'Not Found') {
+    return {
+        name: "NotFoundError",
+        message,
+    }
+}
+
+export default { conflit, unauthorized, notFound }
