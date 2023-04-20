@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt"
 import userRepositories from "../repositories/user.repositories.js"
 import transactionsRepositories from "../repositories/transactions.repositories.js"
+import errors from "../errors/errors.js"
 
 async function create({ name, email, password }) {
 
@@ -10,9 +11,7 @@ async function create({ name, email, password }) {
 
   const hashPassword = await bcrypt.hash(password, 10)
 
-  const user = await userRepositories.create({ name, email, password: hashPassword })
-
-  console.log(user)
+  const user = await userRepositories.create({ name, email, password: hashPassword, session: null })
 
   const userId = user.insertedId
 

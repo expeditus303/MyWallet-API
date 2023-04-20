@@ -8,7 +8,7 @@ async function create(req, res, next) {
 
     return res.status(201).send("User signed up successfully");
   } catch (err) {
-    res.status(400).send(err);
+    next(err)
   }
 }
 

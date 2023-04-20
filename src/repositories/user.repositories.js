@@ -4,8 +4,8 @@ async function findByEmail({ email }) {
   return db.usersCollections.findOne({ email });
 }
 
-async function create({ name, email, password }) {
-  return db.usersCollections.insertOne({ name, email, password });
+async function create({ name, email, password, session }) {
+  return db.usersCollections.insertOne({ name, email, password, session });
 }
 
 export default { findByEmail, create };
