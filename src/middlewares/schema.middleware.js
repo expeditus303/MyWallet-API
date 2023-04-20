@@ -1,0 +1,19 @@
+import httpStatus from "http-status"
+
+function schemaMiddleware(schema, field = "body", status = httpStatus.UNPROCESSABLE_ENTITY) {
+    return (req, res, next) => {
+        const reqValues = req[field]
+        const { error: errorMessages } = schema.validate(reqValues, {abortEarly: false})
+
+        console.log(errorMessages)
+        
+        if(errorMessages) {
+            const error = errorMessages.details.map((detail) => detail.message)
+            res.status(status).send(error)
+        }
+
+        next()
+    }
+}
+
+export default schemaMiddleware
