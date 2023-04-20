@@ -1,9 +1,7 @@
 import transactionsServices from "../services/transactions.services.js"
 
 async function get(req, res, next) {
-  const { user } = res.locals;
-
-  const transactions = user.transactions;
+  const { transactions } = res.locals.user;
 
   try {
     res.status(200).send(transactions);
@@ -28,4 +26,17 @@ async function create(req, res, next) {
 
 }
 
-export default { get, create };
+async function del(req, res, next) {
+  const { _id: userId } = res.locals.user
+  const { transactionId } = req.params
+
+  try {
+    await transactionsServices.del(userId, transactionId)
+
+    res.status(204).send("Transaction successfully deleted.")
+  } catch (err) {
+    next(err)
+  }
+}
+
+export default { get, create, del };

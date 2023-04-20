@@ -7,7 +7,7 @@ function schemaMiddleware(schema, field = "body", status = httpStatus.UNPROCESSA
         
         if(errorMessages) {
             const error = errorMessages.details.map((detail) => detail.message)
-            res.status(status).send(error)
+            return res.status(status).send(error)
         }
 
         next()
