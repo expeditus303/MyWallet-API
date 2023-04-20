@@ -5,4 +5,11 @@ function conflit( message = 'Conflit') {
     }
 }
 
-export default { conflit, }
+function unauthorized(message = 'Unauthorized') {
+    return {
+        name: "UnauthorizedError",
+        message,
+    }
+}
+
+export default { conflit, unauthorized }

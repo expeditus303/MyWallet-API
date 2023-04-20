@@ -1,23 +1,45 @@
-import bcrypt from "bcrypt"
-import userRepositories from "../repositories/user.repositories.js"
-import transactionsRepositories from "../repositories/transactions.repositories.js"
-import errors from "../errors/errors.js"
+import bcrypt from "bcrypt";
+import userRepositories from "../repositories/user.repositories.js";
+import transactionsRepositories from "../repositories/transactions.repositories.js";
+import errors from "../errors/errors.js";
+import { v4 as uuidv4 } from "uuid";
+import { ObjectId } from "mongodb";
 
 async function create({ name, email, password }) {
-
-  const userExists = await userRepositories.findByEmail({email});
+  const userExists = await userRepositories.findByEmail({ email });
 
   if (userExists) throw errors.conflit("Email already registered");
 
-  const hashPassword = await bcrypt.hash(password, 10)
+  const hashPassword = await bcrypt.hash(password, 10);
 
-  const user = await userRepositories.create({ name, email, password: hashPassword, session: null })
+  const newUser = {
+    name,
+    email,
+    password: hashPassword,
+    session: null,
+    transactions: [],
+  };
 
-  const userId = user.insertedId
+  await userRepositories.create(newUser);
 
-  await transactionsRepositories.create({userId, transactions: []})
-
-  return
+  return;
 }
 
-export default { create, };
+async function authenticate({ email, password }) {
+  const userExists = await userRepositories.findByEmail({ email });
+
+  if (!userExists) throw errors.unauthorized("Incorrect email or password");
+
+  const validPassword = await bcrypt.compare(password, userExists.password);
+
+  if (!validPassword) throw errors.unauthorized("Incorrect email or password");
+
+  const userId = new ObjectId(userExists._id);
+  const token = uuidv4();
+
+  await userRepositories.createSession({ _id: userId, token });
+
+  return token;
+}
+
+export default { create, authenticate };

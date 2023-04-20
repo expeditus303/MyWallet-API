@@ -1,7 +1,8 @@
 import httpStatus from "http-status";
 
 const errorStatusCode = {
-    ConflitError: httpStatus.CONFLICT
+    ConflitError: httpStatus.CONFLICT,
+    UnauthorizedError: httpStatus.UNAUTHORIZED
 }
 
 function errorMiddleware(err, req, res, next){

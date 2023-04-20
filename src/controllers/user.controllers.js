@@ -12,4 +12,16 @@ async function create(req, res, next) {
   }
 }
 
-export default { create };
+async function authenticate(req, res, next) {
+  const {email, password} = req.body
+
+  try {
+    const token = await userServices.authenticate({email, password})
+
+    return res.status(200).send(token)
+  } catch (err) {
+    next(err)
+  }
+}
+
+export default { create, authenticate };

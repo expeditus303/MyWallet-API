@@ -5,6 +5,7 @@ import userSchemas from "../schemas/user.schemas.js"
 
 const userRoutes = Router();
 
-userRoutes.post("/signup", schemaMiddleware(userSchemas.create), userControllers.create);
+userRoutes.post("/signup", schemaMiddleware(userSchemas.signUp), userControllers.create);
+userRoutes.post("/signin", schemaMiddleware(userSchemas.signIn), userControllers.authenticate)
 
 export default userRoutes;
