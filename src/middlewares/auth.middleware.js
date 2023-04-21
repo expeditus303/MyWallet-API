@@ -16,7 +16,7 @@ async function authMiddleware(req, res, next) {
         if (!user) throw errors.notFound("User not found for the given authentication token")
         
         res.locals.user = user;
-        
+    
         next()
         
     } catch (err) {

@@ -1,6 +1,5 @@
 import bcrypt from "bcrypt";
 import userRepositories from "../repositories/user.repositories.js";
-import transactionsRepositories from "../repositories/transactions.repositories.js";
 import errors from "../errors/errors.js";
 import { v4 as uuidv4 } from "uuid";
 import { ObjectId } from "mongodb";

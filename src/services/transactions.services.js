@@ -1,6 +1,7 @@
 import { ObjectId } from "mongodb";
 import dayjs from "dayjs";
 import userRepositories from "../repositories/user.repositories.js";
+import errors from "../errors/errors.js";
 
 async function create(userId, type, value, description) {
   const date = dayjs().format("DD-MM-YYYY");
@@ -28,16 +29,19 @@ async function update(
   userId,
   transactionId,
   transactionValue,
-  transactionDescription
-) {
+  transactionDescription) {
+
   transactionId = new ObjectId(transactionId);
 
-  return await userRepositories.update(
+  const updated = await userRepositories.update(
     userId,
     transactionId,
     transactionValue,
     transactionDescription
   );
+
+  if (updated.matchedCount === 0) throw errors.notFound()
+  return
 }
 
 export default { create, del, update };

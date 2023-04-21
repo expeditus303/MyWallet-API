@@ -41,8 +41,7 @@ async function del(req, res, next) {
 async function update(req, res, next) {
   const { _id: userId } = res.locals.user;
   const { transactionId } = req.params;
-  const { value: transactionValue, description: transactionDescription } =
-    req.body;
+  const { value: transactionValue, description: transactionDescription } = req.body;
 
   try {
     await transactionsServices.update(

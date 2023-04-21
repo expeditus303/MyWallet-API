@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import "express-async-errors";
-import routes from "./routes/routes.js";
+import routes from "./routes/index.routes.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
 
 const app = express();
