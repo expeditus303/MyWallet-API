@@ -30,9 +30,9 @@ async function del(req, res, next) {
   const { transactionId } = req.params;
 
   try {
-    await transactionsServices.del(userId, transactionId);
+    const transactionsUpdated = await transactionsServices.del(userId, transactionId);
 
-    res.status(204).send("Transaction successfully deleted.");
+    res.status(200).send(transactionsUpdated);
   } catch (err) {
     next(err);
   }
@@ -44,14 +44,14 @@ async function update(req, res, next) {
   const { value: transactionValue, description: transactionDescription } = req.body;
 
   try {
-    await transactionsServices.update(
+    const transactionsUpdated = await transactionsServices.update(
       userId,
       transactionId,
       transactionValue,
       transactionDescription
     );
 
-    res.status(200).send("Transaction successfully updated.");
+    res.status(200).send(transactionsUpdated);
   } catch (err) {
     next(err);
   }

@@ -22,7 +22,15 @@ async function create(userId, type, value, description) {
 async function del(userId, transactionId) {
   transactionId = new ObjectId(transactionId);
 
-  return await userRepositories.del(userId, transactionId);
+  const deleted = await userRepositories.del(userId, transactionId);
+
+  const transactionsUpdated = deleted.value.transactions
+
+  console.log(transactionsUpdated)
+
+  if (!transactionsUpdated) throw errors.notFound()
+
+  return transactionsUpdated
 }
 
 async function update(
@@ -39,9 +47,12 @@ async function update(
     transactionValue,
     transactionDescription
   );
+  
+  const transactionsUpdated = updated.value.transactions
 
-  if (updated.matchedCount === 0) throw errors.notFound()
-  return
-}
+  if (!transactionsUpdated) throw errors.notFound()
+
+  return transactionsUpdated
+} 
 
 export default { create, del, update };

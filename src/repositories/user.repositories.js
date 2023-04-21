@@ -24,17 +24,17 @@ async function createTransaction(userId, transaction) {
 }
 
 async function del(userId, transactionId) {
-  return db.usersCollections.updateOne(
+  return db.usersCollections.findOneAndUpdate(
     { _id: userId },
-    { $pull: { transactions: { _id: transactionId } } }
+    { $pull: { transactions: { _id: transactionId } } }, 
+    {returnDocument: "after", projection: {password: 0}}
   );
 }
 
 async function update(userId, transactionId, transactionValue, transactionDescription) {
-  return db.usersCollections.updateOne(
-    {$and: [{_id: userId},{"transactions._id": transactionId}]},
-    {$set: {"transactions.$.value": transactionValue, "transactions.$.description": transactionDescription}})
+  return await db.usersCollections.findOneAndUpdate({$and: [{_id: userId},{"transactions._id": transactionId}]}, {$set: {"transactions.$.value": transactionValue, "transactions.$.description": transactionDescription}}, {returnDocument: "after", projection: {password: 0}})
 }
+
 
 export default {
   findByEmail,
