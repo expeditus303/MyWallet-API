@@ -14,9 +14,13 @@ async function create(userId, type, value, description) {
     description,
   };
 
-  await userRepositories.createTransaction(userId, transaction);
+  const created = await userRepositories.createTransaction(userId, transaction);
 
-  return;
+  const transactionsUpdated = created.value.transactions
+
+  if (!transactionsUpdated) throw errors.notFound()
+
+  return transactionsUpdated
 }
 
 async function del(userId, transactionId) {
@@ -24,9 +28,7 @@ async function del(userId, transactionId) {
 
   const deleted = await userRepositories.del(userId, transactionId);
 
-  const transactionsUpdated = deleted.value.transactions
-
-  console.log(transactionsUpdated)
+  const transactionsUpdated = deleted.value?.transactions
 
   if (!transactionsUpdated) throw errors.notFound()
 
@@ -48,7 +50,7 @@ async function update(
     transactionDescription
   );
   
-  const transactionsUpdated = updated.value.transactions
+  const transactionsUpdated = updated.value?.transactions
 
   if (!transactionsUpdated) throw errors.notFound()
 

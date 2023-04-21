@@ -17,24 +17,54 @@ async function findByToken(session) {
 }
 
 async function createTransaction(userId, transaction) {
-  return db.usersCollections.updateOne(
-    { _id: userId },
-    { $push: { transactions: transaction } }
+  const filter = { _id: userId }
+  const update = { $push: { transactions: transaction } }
+  const options = {
+    returnDocument: "after",
+    projection: { password: 0, email: 0, session: 0 },
+  };
+
+
+  return db.usersCollections.findOneAndUpdate(
+    filter,
+    update,
+    options
   );
 }
 
 async function del(userId, transactionId) {
-  return db.usersCollections.findOneAndUpdate(
-    { _id: userId },
-    { $pull: { transactions: { _id: transactionId } } }, 
-    {returnDocument: "after", projection: {password: 0}}
-  );
+  const filter = { _id: userId };
+  const update = { $pull: { transactions: { _id: transactionId } } };
+  const options = {
+    returnDocument: "after",
+    projection: { password: 0, email: 0, session: 0 },
+  };
+
+  return db.usersCollections.findOneAndUpdate(filter, update, options);
 }
 
-async function update(userId, transactionId, transactionValue, transactionDescription) {
-  return await db.usersCollections.findOneAndUpdate({$and: [{_id: userId},{"transactions._id": transactionId}]}, {$set: {"transactions.$.value": transactionValue, "transactions.$.description": transactionDescription}}, {returnDocument: "after", projection: {password: 0}})
-}
+async function update(
+  userId,
+  transactionId,
+  transactionValue,
+  transactionDescription
+) {
+  const filter = {
+    $and: [{ _id: userId }, { "transactions._id": transactionId }],
+  };
+  const update = {
+    $set: {
+      "transactions.$.value": transactionValue,
+      "transactions.$.description": transactionDescription,
+    },
+  };
+  const options = {
+    returnDocument: "after",
+    projection: { password: 0, email: 0, session: 0 },
+  };
 
+  return await db.usersCollections.findOneAndUpdate(filter, update, options);
+}
 
 export default {
   findByEmail,

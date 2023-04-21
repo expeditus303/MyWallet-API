@@ -17,9 +17,9 @@ async function create(req, res, next) {
   const userId = _id;
 
   try {
-    await transactionsServices.create(userId, type, value, description);
+    const transactionsUpdated = await transactionsServices.create(userId, type, value, description);
 
-    return res.sendStatus(201);
+    return res.status(201).send(transactionsUpdated)
   } catch (err) {
     next(err);
   }
