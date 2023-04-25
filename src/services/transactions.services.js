@@ -4,7 +4,7 @@ import userRepositories from "../repositories/user.repositories.js";
 import errors from "../errors/errors.js";
 
 async function create(userId, type, value, description) {
-  const date = dayjs().format("DD-MM-YYYY");
+  const date = dayjs().format("YYYY-MM-DD")
 
   const transaction = {
     _id: new ObjectId(),
